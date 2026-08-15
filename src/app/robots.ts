@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://hiacemedanaceh.com/sitemap.xml',
+    sitemap: 'https://aduntravelhiace.my.id/sitemap.xml',
   };
 }

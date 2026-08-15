@@ -67,7 +67,7 @@ export default function LeaderProfile() {
             <div className="relative w-full md:w-2/5 h-64 md:h-auto min-h-[400px]">
               <Image
                 src="/images/owner-teuku-nasri.jpg"
-                alt="Teuku Nasri Pratama — Owner & Founder Hiace Aceh"
+                alt="Teuku Nasri Pratama — Owner & Founder Adun Travel Hiace Aceh"
                 fill
                 sizes="(max-width: 768px) 100vw, 40vw"
                 className="absolute inset-0 w-full h-full object-cover rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none"
@@ -88,7 +88,7 @@ export default function LeaderProfile() {
                   className="inline-block text-[11px] font-bold uppercase tracking-widest px-3 py-1 rounded-full"
                   style={{ background: "#FEF9C3", color: "#854D0E" }}
                 >
-                  Owner &amp; Founder — Group HIACE ACEH
+                  Owner &amp; Founder — Group ADUN TRAVEL HIACE ACEH
                 </span>
                 <div
                   className="w-16 h-1.5 rounded-full mt-4"

@@ -1,56 +1,66 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown, MapPin, Calendar, Clock, Car, UserCheck, Users } from "lucide-react";
+import { ChevronDown, MapPin, Calendar, Clock, Car, UserCheck, Users, Search, X } from "lucide-react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const fromOptions = [
-  "Medan (Kualanamu / KNO)",
-  "Medan (Kota)",
-  "Pelabuhan Belawan",
+export const ROUTE_LOCATIONS = [
   "Banda Aceh",
-  "Lhokseumawe",
+  "Sigli",
+  "Pidie",
+  "Pidie Jaya",
+  "Meureudu",
+  "Samalanga",
+  "Jeunieb",
   "Bireuen",
+  "Kuta Blang",
+  "Krueng Mane",
+  "Keude Krueng Geukueh (Krukuh)",
+  "Lhokseumawe",
+  "Aceh Utara",
+  "Lhoksukon",
+  "Panton Labu",
+  "Lhoknibong",
+  "Simpang Ulim",
+  "Aceh Timur",
+  "Idi Cut",
+  "Idi Rayeuk",
+  "Peudawa",
+  "Peureulak Barat",
+  "Peureulak Timur",
+  "Sungai Raya",
+  "Bayeun",
   "Langsa",
+  "Paya Tenggar",
+  "Tualang Cut",
+  "Simpang Opak",
+  "Aceh Tamiang",
+  "Kuala Simpang",
+  "Semadam",
+  "Pulau Tiga",
+  "Besitang",
+  "Halban",
+  "Pangkalan Susu",
+  "Pangkalan Brandan",
+  "Tanjung Pura",
+  "Tanjung Beringin",
+  "Stabat",
+  "Langkat",
+  "Binjai",
+  "Medan",
+  "Kualanamu (KNO)",
+  "Belawan"
 ];
 
-const toOptions: Record<string, string[]> = {
-  "Medan (Kualanamu / KNO)": ["Banda Aceh", "Sigli (Pidie)", "Bireuen", "Lhokseumawe", "Langsa", "Takengon", "Beureunuen", "Kuala Simpang"],
-  "Medan (Kota)": ["Banda Aceh", "Sigli (Pidie)", "Bireuen", "Lhokseumawe", "Langsa", "Kuala Simpang", "Takengon"],
-  "Pelabuhan Belawan": ["Banda Aceh", "Lhokseumawe", "Bireuen", "Langsa"],
-  "Banda Aceh": ["Medan (Kualanamu / KNO)", "Medan (Kota)", "Lhokseumawe", "Bireuen", "Sigli", "Kuala Simpang", "Langsa"],
-  "Lhokseumawe": ["Medan (Kualanamu / KNO)", "Banda Aceh", "Takengon", "Bireuen"],
-  "Bireuen": ["Medan (Kualanamu / KNO)", "Banda Aceh", "Lhokseumawe"],
-  "Langsa": ["Medan (Kualanamu / KNO)", "Banda Aceh", "Kuala Simpang"],
-};
-
-const priceMap: Record<string, string> = {
-  "Banda Aceh": "300.000",
-  "Sigli (Pidie)": "270.000",
-  "Sigli": "120.000",
-  "Bireuen": "190.000",
-  "Lhokseumawe": "170.000",
-  "Langsa": "140.000",
-  "Kuala Simpang": "130.000",
-  "Takengon": "260.000",
-  "Beureunuen": "250.000",
-  "Medan (Kualanamu / KNO)": "170.000",
-  "Medan (Kota)": "310.000",
-};
-
-const timeOptionsMedan = [
-  "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", 
-  "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", 
-  "22:00", "23:00", "24:00", "01:00"
-];
-
-const timeOptionsAceh = [
-  "09:00", "10:00", "11:00", "14:00", "15:00", "16:00", "17:00", 
-  "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00"
+const timeGridOptions = [
+  "08:00", "09:00", "10:00", "11:00", 
+  "14:00", "15:00", "16:00", "17:00", 
+  "20:00", "21:00", "22:00", "23:00"
 ];
 
 type TabType = "reguler" | "charter";
+type PickerType = "from" | "to" | null;
 
 export default function Hero() {
   const [activeTab, setActiveTab] = useState<TabType>("reguler");
@@ -58,22 +68,24 @@ export default function Hero() {
   const [to, setTo] = useState("");
   const [date, setDate] = useState<Date | null>(null);
   const [time, setTime] = useState("");
+  
+  // Modal state
+  const [pickerOpen, setPickerOpen] = useState<PickerType>(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const availableTo = from ? (toOptions[from] ?? []) : [];
-  const availableTimes = from === "Banda Aceh" ? timeOptionsAceh : timeOptionsMedan;
-
-  // We show price prominently, calculate it if from and to are selected
-  const calculatedPrice = from && to ? (priceMap[to] ?? "150.000") : "0";
+  const filteredLocations = ROUTE_LOCATIONS.filter(loc => 
+    loc.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handleBook = () => {
     if (activeTab === "charter") {
-      const msg = "Halo Admin Hiace Aceh, saya ingin informasi Sewa/Charter Hiace.";
+      const msg = "Halo Admin Adun Travel, saya ingin informasi Sewa/Charter Hiace.";
       window.open(`https://wa.me/6281373645393?text=${encodeURIComponent(msg)}`, "_blank");
       return;
     }
     
     if (!from || !to || !date || !time) {
-      alert("Mohon lengkapi semua field terlebih dahulu.");
+      alert("Mohon lengkapi semua field (Asal, Tujuan, Tanggal, Jam) terlebih dahulu.");
       return;
     }
 
@@ -81,19 +93,33 @@ export default function Hero() {
       weekday: "long", year: "numeric", month: "long", day: "numeric",
     });
 
-    const msg = `Halo Min! 👋 Saya mau pesan tiket Hiace nih, kebetulan lihat dari website. 
-Berikut detail pesanan saya:
+    const msg = `TIKET BOOKING - ADUN TRAVEL HIACE ACEH
+----------------------------------------
+RUTE PERJALANAN:
+- Titik Asal : ${from}
+- Titik Tujuan: ${to}
 
-📍 *Titik Jemput:* ${from}
-🏁 *Tujuan:* ${to}
-🗓️ *Tanggal:* ${formattedDate}
-⏰ *Jam Berangkat:* ${time} WIB
+WAKTU KEBERANGKATAN:
+- Tanggal     : ${formattedDate}
+- Jam         : ${time} WIB
 
-💳 *Estimasi Tagihan:* Rp ${calculatedPrice}
-
-Kira-kira untuk jadwal ini kursi masih aman kan, Min? Ditunggu info kelanjutannya ya, makasih! 🙏`;
+STATUS:
+- Booking via aduntravelhiace.my.id
+----------------------------------------
+Halo Admin Adun Travel, mohon konfirmasi ketersediaan kursi untuk jadwal perjalanan saya di atas. Terima kasih.`;
 
     window.open(`https://wa.me/6281373645393?text=${encodeURIComponent(msg)}`, "_blank");
+  };
+
+  const openPicker = (type: PickerType) => {
+    setSearchQuery("");
+    setPickerOpen(type);
+  };
+
+  const selectLocation = (loc: string) => {
+    if (pickerOpen === "from") setFrom(loc);
+    if (pickerOpen === "to") setTo(loc);
+    setPickerOpen(null);
   };
 
   return (
@@ -118,13 +144,13 @@ Kira-kira untuk jadwal ini kursi masih aman kan, Min? Ditunggu info kelanjutanny
         <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm border border-white/30 rounded-full px-4 py-2 mb-4">
           <span className="w-2 h-2 rounded-full bg-yellow-400 animate-pulse flex-shrink-0" />
           <span className="text-white text-xs sm:text-sm font-semibold tracking-wide">
-            Armada Resmi · Beroperasi Setiap Hari
+            Armada Resmi Lintas Aceh - Medan
           </span>
         </div>
 
         {/* Headline */}
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-white text-center mb-3 leading-tight max-w-4xl">
-          Perjalanan Lintas Provinsi{" "}
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-white text-center mb-4 leading-tight max-w-5xl">
+          Perjalanan Lintas Provinsi Lebih{" "}
           <span
             className="block sm:inline"
             style={{
@@ -134,11 +160,11 @@ Kira-kira untuk jadwal ini kursi masih aman kan, Min? Ditunggu info kelanjutanny
               backgroundClip: "text",
             }}
           >
-            Nyaman &amp; Terpercaya
+            Aman, Nyaman, &amp; Tepat Waktu
           </span>
         </h1>
-        <p className="text-white/70 text-sm sm:text-base text-center mb-6 max-w-lg leading-relaxed">
-          Medan ↔ Banda Aceh setiap hari. Penjemputan dari Bandara, Pelabuhan &amp; Stasiun.
+        <p className="text-white/70 text-sm sm:text-base md:text-lg text-center mb-6 max-w-2xl leading-relaxed font-medium">
+          "Melayani rute Banda Aceh - Medan (PP), Antar Jemput Bandara Kualanamu &amp; Sultan Iskandar Muda, serta Sewa Charter Armada Hiace Premio."
         </p>
 
         {/* ── Mini Portfolio Stats ── */}
@@ -198,59 +224,54 @@ Kira-kira untuk jadwal ini kursi masih aman kan, Min? Ditunggu info kelanjutanny
             {activeTab === "reguler" ? (
               <>
                 {/* Row 1: From / To */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5">
                   {/* From */}
                   <div>
                     <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">
-                      Lokasi Keberangkatan
+                      Kota Asal
                     </label>
-                    <div className="relative">
-                      <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-                      <select
-                        value={from}
-                        onChange={(e) => { 
-                          setFrom(e.target.value); 
-                          setTo(""); 
-                          setTime(""); 
-                        }}
-                        className="w-full appearance-none bg-gray-50 border border-gray-200 rounded-xl pl-9 pr-8 py-3 text-sm font-semibold text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition cursor-pointer"
-                      >
-                        <option value="">Pilih kota asal...</option>
-                        {fromOptions.map((o) => <option key={o} value={o}>{o}</option>)}
-                      </select>
-                      <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-                    </div>
+                    <button
+                      onClick={() => openPicker("from")}
+                      className="w-full relative bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-left focus:outline-none focus:ring-2 focus:ring-blue-500 transition cursor-pointer flex items-center justify-between group"
+                    >
+                      <div className="flex items-center gap-2">
+                        <MapPin className="w-4 h-4 text-gray-400 group-hover:text-blue-500 transition-colors" />
+                        <span className={`text-sm font-semibold ${from ? "text-gray-800" : "text-gray-400"}`}>
+                          {from || "Pilih Kota Asal"}
+                        </span>
+                      </div>
+                      <ChevronDown className="w-4 h-4 text-gray-400" />
+                    </button>
                   </div>
 
                   {/* To */}
                   <div>
                     <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">
-                      Tujuan
+                      Kota Tujuan
                     </label>
-                    <div className="relative">
-                      <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-                      <select
-                        value={to}
-                        onChange={(e) => setTo(e.target.value)}
-                        disabled={!from}
-                        className="w-full appearance-none bg-gray-50 border border-gray-200 rounded-xl pl-9 pr-8 py-3 text-sm font-semibold text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        <option value="">{from ? "Pilih tujuan..." : "Pilih asal dulu..."}</option>
-                        {availableTo.map((o) => <option key={o} value={o}>{o}</option>)}
-                      </select>
-                      <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-                    </div>
+                    <button
+                      onClick={() => openPicker("to")}
+                      className="w-full relative bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-left focus:outline-none focus:ring-2 focus:ring-blue-500 transition cursor-pointer flex items-center justify-between group"
+                    >
+                      <div className="flex items-center gap-2">
+                        <MapPin className="w-4 h-4 text-gray-400 group-hover:text-blue-500 transition-colors" />
+                        <span className={`text-sm font-semibold ${to ? "text-gray-800" : "text-gray-400"}`}>
+                          {to || "Pilih Tujuan"}
+                        </span>
+                      </div>
+                      <ChevronDown className="w-4 h-4 text-gray-400" />
+                    </button>
                   </div>
                 </div>
 
-                {/* Row 2: Date / Time */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5">
+                {/* Row 2: Date / Time Grid */}
+                <div className="mb-5 border-t border-gray-100 pt-5">
                   {/* Date */}
-                  <div>
+                  <div className="mb-5">
                     <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">
                       Tanggal Berangkat
                     </label>
-                    <div className="relative">
+                    <div className="relative max-w-sm">
                       <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 z-10 pointer-events-none" />
                       <DatePicker
                         selected={date}
@@ -264,38 +285,28 @@ Kira-kira untuk jadwal ini kursi masih aman kan, Min? Ditunggu info kelanjutanny
                     </div>
                   </div>
 
-                  {/* Time */}
+                  {/* Time Grid */}
                   <div>
-                    <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">
-                      Jam Berangkat
+                    <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">
+                      Pilih Jam Berangkat
                     </label>
-                    <div className="relative">
-                      <Clock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-                      <select
-                        value={time}
-                        onChange={(e) => setTime(e.target.value)}
-                        disabled={!from}
-                        className="w-full appearance-none bg-gray-50 border border-gray-200 rounded-xl pl-9 pr-8 py-3 text-sm font-semibold text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        <option value="">{from ? "Pilih jam..." : "Pilih asal dulu..."}</option>
-                        {availableTimes.map((t) => <option key={t} value={t}>{t}</option>)}
-                      </select>
-                      <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+                    <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
+                      {timeGridOptions.map((t) => (
+                        <button
+                          key={t}
+                          onClick={() => setTime(t)}
+                          className={`py-2 rounded-xl text-center text-sm transition-all ${
+                            time === t
+                              ? "bg-yellow-500 border-2 border-yellow-500 text-white font-bold shadow-md transform scale-[1.02]"
+                              : "bg-white border-2 border-gray-100 text-gray-700 font-medium hover:border-yellow-400 hover:bg-yellow-50"
+                          }`}
+                        >
+                          {t}
+                        </button>
+                      ))}
                     </div>
                   </div>
                 </div>
-
-                {/* Exact Price Display */}
-                {from && to && (
-                  <div className="flex flex-col items-center justify-center mb-5 pb-5 border-b border-gray-100">
-                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">
-                      Total Harga
-                    </p>
-                    <p className="text-3xl sm:text-4xl font-black text-navy" style={{ color: "#1E3A8A" }}>
-                      Rp {calculatedPrice}
-                    </p>
-                  </div>
-                )}
               </>
             ) : (
               /* Charter Tab Info */
@@ -309,23 +320,17 @@ Kira-kira untuk jadwal ini kursi masih aman kan, Min? Ditunggu info kelanjutanny
             {/* CTA */}
             <button
               onClick={handleBook}
-              className="w-full py-4 text-base sm:text-lg font-extrabold rounded-xl transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-3 shadow-lg"
+              className="w-full py-4 mt-2 text-base sm:text-lg font-extrabold rounded-xl transition-all hover:scale-[1.01] active:scale-95 flex items-center justify-center gap-3 shadow-lg"
               style={{
                 background: "linear-gradient(135deg, #1E3A8A 0%, #2563eb 100%)",
                 color: "#ffffff",
                 boxShadow: "0 8px 28px rgba(30,58,138,0.35)",
               }}
             >
-              {/* WhatsApp icon */}
-              <svg className="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
-                <path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.557 4.12 1.529 5.851L.057 23.571a.75.75 0 00.92.92l5.72-1.472A11.946 11.946 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75A9.716 9.716 0 016.54 20.18l-.387-.23-4.004 1.03 1.03-3.893-.253-.405A9.716 9.716 0 012.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z" />
-              </svg>
               {activeTab === "reguler" ? "Cari Tiket (Booking via WA)" : "Hubungi Admin (Sewa/Charter)"}
             </button>
-
             <p className="text-center text-[11px] text-gray-400 mt-3">
-              Diarahkan otomatis ke WhatsApp Admin kami
+              Diarahkan otomatis ke WhatsApp Admin Adun Travel
             </p>
           </div>
         </div>
@@ -340,6 +345,58 @@ Kira-kira untuk jadwal ini kursi masih aman kan, Min? Ditunggu info kelanjutanny
           ))}
         </div>
       </div>
+
+      {/* ── Searchable Location Modal ── */}
+      {pickerOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl flex flex-col max-h-[85vh]">
+            <div className="p-4 border-b border-gray-100 flex items-center justify-between bg-gray-50">
+              <h3 className="font-bold text-gray-800 text-lg">
+                {pickerOpen === "from" ? "Pilih Kota Asal" : "Pilih Kota Tujuan"}
+              </h3>
+              <button 
+                onClick={() => setPickerOpen(null)}
+                className="p-1.5 rounded-full hover:bg-gray-200 transition-colors text-gray-500"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            
+            <div className="p-4 border-b border-gray-100">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <input 
+                  type="text" 
+                  placeholder="Ketik nama kota / daerah..." 
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow"
+                  autoFocus
+                />
+              </div>
+            </div>
+
+            <div className="overflow-y-auto flex-1 p-2">
+              {filteredLocations.length > 0 ? (
+                filteredLocations.map(loc => (
+                  <button
+                    key={loc}
+                    onClick={() => selectLocation(loc)}
+                    className="w-full text-left py-3 px-4 rounded-lg hover:bg-yellow-50 focus:bg-yellow-50 transition-colors text-gray-700 font-medium text-sm flex items-center gap-3 group"
+                  >
+                    <MapPin className="w-4 h-4 text-gray-300 group-hover:text-yellow-500" />
+                    {loc}
+                  </button>
+                ))
+              ) : (
+                <div className="py-8 text-center text-gray-400 text-sm">
+                  Kota tidak ditemukan.
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Global overrides for react-datepicker to match theme */}
       <style dangerouslySetInnerHTML={{

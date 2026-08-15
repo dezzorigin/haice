@@ -33,8 +33,8 @@ export default function AddressMap() {
     {
       icon: <Mail className="w-5 h-5 flex-shrink-0" />,
       label: "Email",
-      value: "cs@travelhiaceaceh.com",
-      href: "mailto:cs@travelhiaceaceh.com",
+      value: "cs@aduntravelhiace.my.id",
+      href: "mailto:cs@aduntravelhiace.my.id",
     },
   ];
 
@@ -185,7 +185,7 @@ export default function AddressMap() {
 
             {/* WhatsApp CTA */}
             <a
-              href="https://wa.me/6281373645393?text=Halo%20Admin%20Hiace%20Aceh"
+              href="https://wa.me/6281373645393?text=Halo%20Admin%20Adun%20Travel"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-3 px-6 py-4 rounded-2xl font-bold text-base transition-all hover:scale-105 w-full"

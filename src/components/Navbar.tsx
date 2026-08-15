@@ -28,26 +28,33 @@ export default function Navbar() {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-200">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 md:h-18">
-            {/* Brand */}
             <Link
               href="/"
               className="flex items-center gap-2 flex-shrink-0"
-              aria-label="TravelHiaceAceh Home"
+              aria-label="Adun Travel Hiace Aceh Home"
             >
+              <div className="relative w-8 h-8 sm:w-10 sm:h-10 flex-shrink-0">
+                <img 
+                  src="/images/logo-adun-travel.png" 
+                  alt="Adun Travel Logo"
+                  className="w-full h-full object-contain"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                    e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                  }}
+                />
+                <span
+                  className="hidden w-full h-full rounded-lg flex items-center justify-center text-white text-sm font-black"
+                  style={{ background: "linear-gradient(135deg, #1E3A8A, #EAB308)" }}
+                >
+                  A
+                </span>
+              </div>
               <span
-                className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-sm font-black flex-shrink-0"
-                style={{
-                  background: "linear-gradient(135deg, #1E3A8A, #EAB308)",
-                }}
-              >
-                H
-              </span>
-              <span
-                className="text-lg font-extrabold tracking-tight leading-none"
+                className="text-lg sm:text-xl font-extrabold tracking-tight leading-none"
                 style={{ color: "#1E3A8A" }}
               >
-                Travel<span style={{ color: "#EAB308" }}>Hiace</span>
-                <span className="text-gray-700">Aceh</span>
+                Adun<span style={{ color: "#EAB308" }}>Travel</span>
               </span>
             </Link>
 

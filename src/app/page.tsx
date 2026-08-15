@@ -38,7 +38,7 @@ export default function Home() {
             Travel<span className="text-white">Hiace</span>Aceh
           </div>
           <p className="text-gray-400 text-sm mb-4">
-            Armada Resmi Hiace Aceh–Medan · Nyaman, Aman &amp; Terpercaya
+            Armada Resmi Adun Travel Hiace Aceh–Medan · Nyaman, Aman &amp; Terpercaya
           </p>
           <p className="text-gray-600 text-xs">
             &copy; {new Date().getFullYear()} HIACE MEDAN ACEH RESMI. All rights reserved.

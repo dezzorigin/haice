@@ -144,15 +144,20 @@ export default function BookingWidget() {
       month: "long",
       day: "numeric",
     });
-    const msg = [
-      "Halo Admin Hiace Aceh, saya ingin memesan tiket.",
-      "",
-      `Dari: ${from}`,
-      `Ke: ${to}`,
-      `Tanggal: ${formattedDate}`,
-      `Jam: ${time}`,
-      `Estimasi Harga: ${priceMap[to] ?? "Sesuai tarif berlaku"}`,
-    ].join("\n");
+    const msg = `TIKET BOOKING - ADUN TRAVEL HIACE ACEH
+----------------------------------------
+RUTE PERJALANAN:
+- Titik Asal : ${from}
+- Titik Tujuan: ${to}
+
+WAKTU KEBERANGKATAN:
+- Tanggal     : ${formattedDate}
+- Jam         : ${time} WIB
+
+STATUS:
+- Booking via aduntravelhiace.my.id
+----------------------------------------
+Halo Admin Adun Travel, mohon konfirmasi ketersediaan kursi untuk jadwal perjalanan saya di atas. Terima kasih.`;
     window.open(
       `https://wa.me/6281373645393?text=${encodeURIComponent(msg)}`,
       "_blank"

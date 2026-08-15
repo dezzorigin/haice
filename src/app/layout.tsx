@@ -9,20 +9,20 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Sewa Hiace Banda Aceh & Rental Hiace Medan | Resmi",
+  title: "Adun Travel Hiace Aceh | Sewa & Travel Lintas Provinsi Resmi",
   description:
-    "Armada resmi HIACE Aceh. Melayani sewa Hiace Banda Aceh, rental Hiace Medan, travel lintas provinsi, dan penjemputan Bandara Kualanamu. Keberangkatan setiap hari.",
+    "Armada resmi Adun Travel Hiace Aceh. Melayani sewa Hiace Banda Aceh, rental Hiace Medan, travel lintas provinsi, dan penjemputan Bandara Kualanamu. Keberangkatan setiap hari.",
   keywords:
-    "Sewa Hiace Banda Aceh, Travel Medan Aceh, Rental Hiace Kualanamu, Rental Hiace Medan, Sewa Mobil Rombongan Aceh",
+    "Adun Travel Hiace Aceh, Sewa Hiace Banda Aceh, Travel Medan Aceh, Rental Hiace Kualanamu, Rental Hiace Medan",
 };
 
 const schemaJSON = {
   "@context": "https://schema.org",
   "@type": "TravelAgency",
-  name: "HIACE MEDAN ACEH RESMI",
+  name: "Adun Travel Hiace Aceh",
   description:
     "Premium travel and rental car business serving Medan, Banda Aceh, and Sabang.",
-  url: "https://hiacemedanaceh.com",
+  url: "https://aduntravelhiace.my.id",
   telephone: "+6281373645393",
   address: {
     "@type": "PostalAddress",

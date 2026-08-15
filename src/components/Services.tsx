@@ -94,7 +94,7 @@ export default function Services() {
                 {/* Hover CTA */}
                 <div className="translate-y-3 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
                   <a
-                    href="https://wa.me/6281373645393?text=Halo%20Admin%20Hiace%20Aceh,%20saya%20ingin%20informasi%20layanan"
+                    href="https://wa.me/6281373645393?text=Halo%20Admin%20Adun%20Travel,%20saya%20ingin%20informasi%20layanan"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 font-bold text-sm px-5 py-2.5 rounded-full transition-all hover:scale-105"
