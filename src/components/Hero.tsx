@@ -102,7 +102,8 @@ export default function Hero() {
     
     setErrors({});
 
-    const formattedDate = date.toLocaleDateString("id-ID", {
+    // Kita pastikan ke TypeScript bahwa date tidak mungkin null di sini karena sudah lolos validasi di atas.
+    const formattedDate = date!.toLocaleDateString("id-ID", {
       weekday: "long", year: "numeric", month: "long", day: "numeric",
     });
 
