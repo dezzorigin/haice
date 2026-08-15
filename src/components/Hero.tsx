@@ -66,8 +66,9 @@ export default function Hero() {
   const [activeTab, setActiveTab] = useState<TabType>("reguler");
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
-  const [date, setDate] = useState<Date | null>(null);
+  const [date, setDate] = useState<Date | null>(new Date());
   const [time, setTime] = useState("");
+  const [errors, setErrors] = useState<{from?: boolean; to?: boolean; date?: boolean; time?: boolean}>({});
   
   // Modal state
   const [pickerOpen, setPickerOpen] = useState<PickerType>(null);
@@ -83,11 +84,23 @@ export default function Hero() {
       window.open(`https://wa.me/6281373645393?text=${encodeURIComponent(msg)}`, "_blank");
       return;
     }
-    
-    if (!from || !to || !date || !time) {
-      alert("Mohon lengkapi semua field (Asal, Tujuan, Tanggal, Jam) terlebih dahulu.");
+    const newErrors = {
+      from: !from,
+      to: !to,
+      date: !date,
+      time: !time
+    };
+
+    if (Object.values(newErrors).some(Boolean)) {
+      setErrors(newErrors);
+      const firstErrorKey = Object.keys(newErrors).find(k => newErrors[k as keyof typeof newErrors]);
+      if (firstErrorKey) {
+        document.getElementById(`input-${firstErrorKey}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
       return;
     }
+    
+    setErrors({});
 
     const formattedDate = date.toLocaleDateString("id-ID", {
       weekday: "long", year: "numeric", month: "long", day: "numeric",
@@ -247,17 +260,23 @@ Halo Admin Adun Travel, mohon konfirmasi ketersediaan kursi untuk jadwal perjala
                       Kota Asal
                     </label>
                     <button
+                      id="input-from"
                       onClick={() => openPicker("from")}
-                      className="w-full relative bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-left focus:outline-none focus:ring-2 focus:ring-blue-500 transition cursor-pointer flex items-center justify-between group"
+                      className={`w-full relative bg-gray-50 border rounded-xl px-4 py-3 text-left focus:outline-none transition cursor-pointer flex items-center justify-between group ${
+                        errors.from ? "border-red-500 ring-1 ring-red-500" : "border-gray-200 focus:ring-2 focus:ring-blue-500"
+                      }`}
                     >
                       <div className="flex items-center gap-2">
-                        <MapPin className="w-4 h-4 text-gray-400 group-hover:text-blue-500 transition-colors" />
-                        <span className={`text-sm font-semibold ${from ? "text-gray-800" : "text-gray-400"}`}>
+                        <MapPin className={`w-4 h-4 transition-colors ${errors.from ? "text-red-500" : "text-gray-400 group-hover:text-blue-500"}`} />
+                        <span className={`text-sm font-semibold ${from ? "text-gray-800" : errors.from ? "text-red-500" : "text-gray-400"}`}>
                           {from || "Pilih Kota Asal"}
                         </span>
                       </div>
-                      <ChevronDown className="w-4 h-4 text-gray-400" />
+                      <ChevronDown className={`w-4 h-4 ${errors.from ? "text-red-500" : "text-gray-400"}`} />
                     </button>
+                    {errors.from && (
+                      <span className="text-xs text-red-500 font-medium mt-1 block">Harap pilih kota asal</span>
+                    )}
                   </div>
 
                   {/* To */}
@@ -266,17 +285,23 @@ Halo Admin Adun Travel, mohon konfirmasi ketersediaan kursi untuk jadwal perjala
                       Kota Tujuan
                     </label>
                     <button
+                      id="input-to"
                       onClick={() => openPicker("to")}
-                      className="w-full relative bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-left focus:outline-none focus:ring-2 focus:ring-blue-500 transition cursor-pointer flex items-center justify-between group"
+                      className={`w-full relative bg-gray-50 border rounded-xl px-4 py-3 text-left focus:outline-none transition cursor-pointer flex items-center justify-between group ${
+                        errors.to ? "border-red-500 ring-1 ring-red-500" : "border-gray-200 focus:ring-2 focus:ring-blue-500"
+                      }`}
                     >
                       <div className="flex items-center gap-2">
-                        <MapPin className="w-4 h-4 text-gray-400 group-hover:text-blue-500 transition-colors" />
-                        <span className={`text-sm font-semibold ${to ? "text-gray-800" : "text-gray-400"}`}>
+                        <MapPin className={`w-4 h-4 transition-colors ${errors.to ? "text-red-500" : "text-gray-400 group-hover:text-blue-500"}`} />
+                        <span className={`text-sm font-semibold ${to ? "text-gray-800" : errors.to ? "text-red-500" : "text-gray-400"}`}>
                           {to || "Pilih Tujuan"}
                         </span>
                       </div>
-                      <ChevronDown className="w-4 h-4 text-gray-400" />
+                      <ChevronDown className={`w-4 h-4 ${errors.to ? "text-red-500" : "text-gray-400"}`} />
                     </button>
+                    {errors.to && (
+                      <span className="text-xs text-red-500 font-medium mt-1 block">Harap pilih kota tujuan</span>
+                    )}
                   </div>
                 </div>
 
@@ -287,26 +312,31 @@ Halo Admin Adun Travel, mohon konfirmasi ketersediaan kursi untuk jadwal perjala
                     <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">
                       Tanggal Berangkat
                     </label>
-                    <div className="relative max-w-sm">
-                      <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 z-10 pointer-events-none" />
+                    <div id="input-date" className="relative max-w-sm">
+                      <Calendar className={`absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 z-10 pointer-events-none ${errors.date ? "text-red-500" : "text-gray-400"}`} />
                       <DatePicker
                         selected={date}
                         onChange={(d: Date | null) => setDate(d)}
                         minDate={new Date()}
                         dateFormat="dd MMMM yyyy"
                         placeholderText="Pilih tanggal..."
-                        className="w-full bg-gray-50 border border-gray-200 rounded-xl pl-9 pr-4 py-3 text-sm font-semibold text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition cursor-pointer"
+                        className={`w-full bg-gray-50 border rounded-xl pl-9 pr-4 py-3 text-sm font-semibold focus:outline-none transition cursor-pointer ${
+                          errors.date ? "border-red-500 ring-1 ring-red-500 text-red-900" : "border-gray-200 focus:ring-2 focus:ring-blue-500 text-gray-800"
+                        }`}
                         wrapperClassName="w-full"
                       />
                     </div>
+                    {errors.date && (
+                      <span className="text-xs text-red-500 font-medium mt-1 block">Harap pilih tanggal keberangkatan</span>
+                    )}
                   </div>
 
                   {/* Time Grid */}
-                  <div>
+                  <div id="input-time">
                     <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">
                       Pilih Jam Berangkat
                     </label>
-                    <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
+                    <div className={`grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2 ${errors.time ? "p-2 border border-red-500 ring-1 ring-red-500 rounded-xl bg-red-50/20" : ""}`}>
                       {timeGridOptions.map((t) => (
                         <button
                           key={t}
@@ -321,6 +351,9 @@ Halo Admin Adun Travel, mohon konfirmasi ketersediaan kursi untuk jadwal perjala
                         </button>
                       ))}
                     </div>
+                    {errors.time && (
+                      <span className="text-xs text-red-500 font-medium mt-1 block">Harap pilih jam keberangkatan</span>
+                    )}
                   </div>
                 </div>
               </>
