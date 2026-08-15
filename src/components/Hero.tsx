@@ -93,6 +93,21 @@ export default function Hero() {
       weekday: "long", year: "numeric", month: "long", day: "numeric",
     });
 
+    const fromIndex = ROUTE_LOCATIONS.indexOf(from);
+    const toIndex = ROUTE_LOCATIONS.indexOf(to);
+    let tarif = "Konfirmasi Admin";
+    
+    if (fromIndex !== -1 && toIndex !== -1) {
+      const diff = Math.abs(fromIndex - toIndex);
+      if (diff > 30) {
+        tarif = "Rp 300.000";
+      } else if (diff > 10) {
+        tarif = "Rp 170.000 - Rp 250.000";
+      } else {
+        tarif = "Rp 100.000";
+      }
+    }
+
     const msg = `TIKET BOOKING - ADUN TRAVEL HIACE ACEH
 ----------------------------------------
 RUTE PERJALANAN:
@@ -105,6 +120,7 @@ WAKTU KEBERANGKATAN:
 
 STATUS:
 - Booking via aduntravelhiace.my.id
+- Total Tarif : ${tarif}
 ----------------------------------------
 Halo Admin Adun Travel, mohon konfirmasi ketersediaan kursi untuk jadwal perjalanan saya di atas. Terima kasih.`;
 
@@ -196,7 +212,7 @@ Halo Admin Adun Travel, mohon konfirmasi ketersediaan kursi untuk jadwal perjala
         </div>
 
         {/* ── Booking Widget Card ── */}
-        <div className="w-[95%] sm:w-full max-w-3xl mx-auto bg-white rounded-2xl shadow-2xl overflow-visible">
+        <div id="booking-section" className="w-[95%] sm:w-full max-w-3xl mx-auto bg-white rounded-2xl shadow-2xl overflow-visible scroll-mt-24">
 
           {/* Tabs */}
           <div className="flex border-b border-gray-100 rounded-t-2xl overflow-hidden">

@@ -11,9 +11,9 @@ export default function RouteMap() {
   ];
 
   const stats = [
-    { value: "± 12 Jam", label: "Estimasi Perjalanan" },
-    { value: "570 KM", label: "Total Jarak Tempuh" },
-    { value: "8+", label: "Kota Singgah" },
+    { value: "± 12 - 14 Jam", label: "Estimasi Perjalanan" },
+    { value: "600+ KM", label: "Total Jangkauan Rute" },
+    { value: "30+", label: "Titik Singgah (Kota & Kecamatan)" },
     { value: "24/7", label: "Operasi Harian" },
   ];
 

@@ -9,19 +9,20 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Adun Travel Hiace Aceh | Sewa & Travel Lintas Provinsi Resmi",
+  title: "Adun Travel Aceh | Pesan Hiace Online & Travel Lintas Provinsi",
   description:
-    "Armada resmi Adun Travel Hiace Aceh. Melayani sewa Hiace Banda Aceh, rental Hiace Medan, travel lintas provinsi, dan penjemputan Bandara Kualanamu. Keberangkatan setiap hari.",
+    "Adun Travel Aceh melayani pesan Hiace online untuk rute Banda Aceh, Medan, dan sekitarnya. Sewa Hiace Banda Aceh, travel Hiace Medan, penjemputan Bandara Kualanamu, dan charter Hiace Aceh yang nyaman dan terpercaya.",
   keywords:
-    "Adun Travel Hiace Aceh, Sewa Hiace Banda Aceh, Travel Medan Aceh, Rental Hiace Kualanamu, Rental Hiace Medan",
+    "Adun Travel Aceh, pesan hiace online, hiace aceh, hiace banda aceh, hiace medan, sewa hiace aceh, travel medan aceh, rental hiace medan, travel hiace kualanamu",
 };
 
 const schemaJSON = {
   "@context": "https://schema.org",
   "@type": "TravelAgency",
-  name: "Adun Travel Hiace Aceh",
+  name: "Adun Travel Aceh",
+  alternateName: ["Adun Travel Hiace Aceh", "Hiace Aceh", "Sewa Hiace Banda Aceh", "Travel Hiace Medan"],
   description:
-    "Premium travel and rental car business serving Medan, Banda Aceh, and Sabang.",
+    "Layanan pemesanan tiket travel lintas provinsi secara online, melayani rute Banda Aceh - Medan. Pusat sewa mobil Hiace Aceh, rental Hiace Kualanamu, dan charter eksekutif terpercaya.",
   url: "https://aduntravelhiace.my.id",
   telephone: "+6281373645393",
   address: {

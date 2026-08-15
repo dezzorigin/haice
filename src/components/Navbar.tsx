@@ -18,7 +18,6 @@ export default function Navbar() {
 
   const navLinks = [
     { name: "Layanan", href: "#layanan" },
-    { name: "Pesan", href: "#beranda" },
     { name: "Lokasi", href: "#lokasi" },
     { name: "Owner", href: "#owner" },
   ];
@@ -61,16 +60,16 @@ export default function Navbar() {
             {/* Desktop Links */}
             <div className="hidden md:flex items-center gap-1">
               {navLinks.map((link) => (
-                <Link
+                <a
                   key={link.name}
                   href={link.href}
                   className="px-4 py-2 rounded-lg text-sm font-semibold text-gray-600 hover:text-navy hover:bg-blue-50 transition-all duration-200"
                 >
                   {link.name}
-                </Link>
+                </a>
               ))}
-              <Link
-                href="#beranda"
+              <a
+                href="#booking-section"
                 className="ml-2 px-5 py-2.5 rounded-lg text-sm font-bold text-white transition-all duration-200 hover:opacity-90 hover:scale-105 flex-shrink-0"
                 style={{
                   background: "linear-gradient(135deg, #EAB308, #ca8a04)",
@@ -78,17 +77,17 @@ export default function Navbar() {
                 }}
               >
                 Pesan Tiket
-              </Link>
+              </a>
             </div>
 
             {/* Mobile Right Content */}
             <div className="flex md:hidden items-center gap-3">
-              <Link
-                href="#beranda"
+              <a
+                href="#booking-section"
                 className="bg-[#EAB308] text-white px-4 py-1.5 rounded-md text-sm font-bold shadow-sm"
               >
                 Pesan
-              </Link>
+              </a>
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="p-1 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors flex-shrink-0"
@@ -113,17 +112,17 @@ export default function Navbar() {
         >
           <div className="px-4 py-3 space-y-1">
             {navLinks.map((link) => (
-              <Link
+              <a
                 key={link.name}
                 href={link.href}
                 onClick={() => setIsOpen(false)}
                 className="block px-4 py-3 rounded-xl text-base font-semibold text-gray-700 hover:bg-blue-50 hover:text-navy transition-all"
               >
                 {link.name}
-              </Link>
+              </a>
             ))}
-            <Link
-              href="#beranda"
+            <a
+              href="#booking-section"
               onClick={() => setIsOpen(false)}
               className="block mt-1 px-4 py-3 rounded-xl text-base font-bold text-center shadow-sm"
               style={{
@@ -132,7 +131,7 @@ export default function Navbar() {
               }}
             >
               Pesan Tiket Sekarang
-            </Link>
+            </a>
           </div>
           <div className="h-3" />
         </div>

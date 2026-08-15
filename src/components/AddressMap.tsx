@@ -30,27 +30,6 @@ export default function AddressMap() {
       value: "+62 813 7364 5393",
       href: "https://wa.me/6281373645393",
     },
-    {
-      icon: <Mail className="w-5 h-5 flex-shrink-0" />,
-      label: "Email",
-      value: "cs@aduntravelhiace.my.id",
-      href: "mailto:cs@aduntravelhiace.my.id",
-    },
-  ];
-
-  const socials = [
-    {
-      icon: <InstagramIcon />,
-      label: "Instagram",
-      href: "https://www.instagram.com/travelhiaceaceh/",
-      color: "#E1306C",
-    },
-    {
-      icon: <TikTokIcon />,
-      label: "TikTok",
-      href: "https://tiktok.com/@travelhiaceaceh",
-      color: "#000000",
-    },
   ];
 
   return (
@@ -79,36 +58,16 @@ export default function AddressMap() {
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-0 rounded-3xl overflow-hidden shadow-2xl border border-gray-100">
 
           {/* ── Left col: Google Maps iframe ── */}
-          <div className="relative min-h-[300px] md:min-h-0">
+          <div className="relative min-h-[350px] md:min-h-0 bg-gray-100">
             <iframe
-              title="Lokasi Kantor Hiace Aceh Medan"
+              title="Lokasi Kantor Adun Travel Hiace Aceh"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3982.011598670296!2d98.6283857758966!3d3.584810950318206!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30312e4c3ee47ff1%3A0x92e6c65599ea26f8!2sJl.%20Merak%20No.24%2C%20Sei%20Sikambing%20B%2C%20Kec.%20Medan%20Sunggal%2C%20Kota%20Medan%2C%20Sumatera%20Utara%2020122!5e0!3m2!1sid!2sid!4v1786824606011!5m2!1sid!2sid"
-              className="absolute inset-0 w-full h-full border-0"
+              className="absolute inset-0 w-full h-full border-0 pointer-events-auto"
               allowFullScreen
               loading="lazy"
               referrerPolicy="strict-origin-when-cross-origin"
             />
-
-            {/* Red pin overlay */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-              <div className="flex flex-col items-center">
-                <MapPin
-                  className="w-12 h-12"
-                  style={{
-                    color: "#ef4444",
-                    filter: "drop-shadow(0 4px 10px rgba(239,68,68,0.6))",
-                  }}
-                />
-                <span
-                  className="mt-1 px-3 py-1 rounded-full text-xs font-bold text-white shadow"
-                  style={{ background: "rgba(15,23,42,0.80)", backdropFilter: "blur(6px)" }}
-                >
-                  Kantor Pusat
-                </span>
-              </div>
-            </div>
-
-            {/* Open maps link */}
+            {/* Open maps link - Floating button */}
             <a
               href="https://maps.app.goo.gl/dUAF5S8sXZp7tyhC7"
               target="_blank"
@@ -161,42 +120,40 @@ export default function AddressMap() {
               ))}
             </div>
 
-            {/* Social */}
-            <div className="mb-7">
+            {/* Social & WhatsApp Buttons */}
+            <div className="mt-2">
               <p className="text-[10px] font-bold uppercase tracking-widest text-white/40 mb-4">
-                Media Sosial
+                Terhubung dengan Kami
               </p>
-              <div className="flex gap-3">
-                {socials.map((s) => (
-                  <a
-                    key={s.label}
-                    href={s.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={s.label}
-                    className="w-12 h-12 rounded-2xl flex items-center justify-center transition-all hover:scale-110 hover:-translate-y-1"
-                    style={{ background: s.color, color: "white" }}
-                  >
-                    {s.icon}
-                  </a>
-                ))}
+              <div className="flex flex-col sm:flex-row gap-3">
+                <a
+                  href="https://www.instagram.com/travelhiaceaceh/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-bold text-sm text-white transition-all hover:scale-105 shadow-md hover:shadow-lg"
+                  style={{
+                    background: "linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)",
+                  }}
+                >
+                  <InstagramIcon />
+                  Follow Instagram
+                </a>
+                
+                <a
+                  href="https://wa.me/6281373645393?text=Halo%20Admin%20Adun%20Travel,%20saya%20butuh%20bantuan"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-bold text-sm text-white transition-all hover:scale-105 shadow-md hover:shadow-lg"
+                  style={{
+                    background: "#25D366", // WhatsApp Emerald Green
+                  }}
+                >
+                  <Phone className="w-4 h-4 flex-shrink-0" />
+                  Chat WhatsApp
+                </a>
               </div>
             </div>
 
-            {/* WhatsApp CTA */}
-            <a
-              href="https://wa.me/6281373645393?text=Halo%20Admin%20Adun%20Travel"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-3 px-6 py-4 rounded-2xl font-bold text-base transition-all hover:scale-105 w-full"
-              style={{
-                background: "linear-gradient(135deg, #EAB308, #ca8a04)",
-                color: "#1E3A8A",
-              }}
-            >
-              <Phone className="w-5 h-5 flex-shrink-0" />
-              Hubungi via WhatsApp
-            </a>
           </div>
         </div>
       </div>
